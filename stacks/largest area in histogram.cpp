@@ -1,15 +1,12 @@
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
-        vector<int> width;
         int max_area = INT_MIN;
         vector<int> right = NSER(heights, heights.size());
         vector<int> left = NSEL(heights, heights.size());
         for (int i = 0; i < heights.size(); i++) {
-            width.push_back(abs(right[i] - left[i] - 1));
-        }
-        for (int i = 0; i < heights.size(); i++) {
-            max_area = max(max_area, width[i] * heights[i]);
+            //width * height
+            max_area = max(max_area, abs(right[i] - left[i] - 1) * heights[i]);
         }
         return max_area;
     }
