@@ -1,3 +1,6 @@
+// keep adding numbers to sum until we see a '('
+// if we see '(', push current sum  and sign to the stack so that we can construct new sum
+// if we see operator, multiply num with previous sign and set current operator to sum
 class Solution {
 public:
     bool is_digit(char c) {
@@ -17,17 +20,21 @@ public:
                 num *= sign;
                 sum += num;
                 sign = -1;
+                //setting num = 0 so that we construct new number
                 num = 0;
             }
             else if (s[i] == '+') {
                 num *= sign;
                 sum += num;
-                sign = 1;
+                // reset
+                sign = 1
                 num = 0;
             }
             else if (s[i] == '(') {
+                //pushing sum and sign into stack so that we can use later
                 stack.push_back(sum);
                 stack.push_back(sign);
+                // resetting sum = 0 so that we construct new sum for upcoming brackter
                 sum = 0;
                 sign = 1;
             }
