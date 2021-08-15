@@ -15,6 +15,9 @@ public:
 
     /** Removes the element from in front of queue and returns that element. */
     int pop() {
+        // if stack2 is empty, push all elements of stack1 to stack2
+        //Hence elements will be stored in reversed order
+        // the top element of stack2 is front element of queue
         int item;
         if (stack2.size() == 0) {
             while (stack1.size() > 0) {
