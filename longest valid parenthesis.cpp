@@ -31,3 +31,35 @@ public:
         return result;
     }
 };
+//time: O(n) and space: O(n)
+// Dynamic approach
+// We make use of a dp array where iith element dp[i] represents the length of the longest valid substring ending at iith index
+//substring ending with ')' will make matching pair, this leads to conclusion that substring ending with '(' will contain 0 at their correspoding dp indices
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int dp[s.size() + 1];
+        int best_ans = 0;
+        int n = s.size();
+        dp[0] = 0;
+        for(int i = 1; i < n; i++){
+            dp[i] = 0;
+            if (s[i] == ')'){
+                if (s[i -1] == '('){
+                    if (i == 1) dp[i] = 2;
+                    else dp[i] = dp[i - 2] + 2;
+                }
+                else if (s[i -1] == ')'){
+                    if (i - dp[i -1] -1 >= 0 and s[i - dp[i -1] -1] == '('){
+                        if (i - dp[i -1] - 2 >= 0){
+                            dp[i] = dp[i -1] + dp[i - dp[i -1] -2] + 2;
+                        }
+                        else dp[i] = dp[i -1] + 2;
+                    }
+                }
+            }
+            best_ans = max(best_ans, dp[i]);
+                }
+        return best_ans;
+    }
+};
