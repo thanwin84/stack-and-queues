@@ -6,34 +6,33 @@
 class Solution {
 public:
     int longestValidParentheses(string s) {
+        int ans = 0;
         vector<int> stack;
         stack.push_back(0);
-        int result = 0;
-        for (int i = 0; i < s.size(); i++){
-            //if we see '(', push it to stack as 0
-            if (s[i] == '('){
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == '(') {
                 stack.push_back(0);
             }
             else {
-                if (stack.size() > 1){
-                    // we got a matching pair
+                if (stack.size() > 1) {
+                    //we got a matching pair
                     int num = stack.back();
                     stack.pop_back();
-                    int val = stack.back();
+                    //adding current value to previously found matching value
+                    int prev_value = num + stack.back() + 2;
                     stack.pop_back();
-                    //adding current pair value to previously found matching pair
-                    val += num + 2;
-                    stack.push_back(val);
-                    result = max(val, result);
+                    ans = max(ans, prev_value);
+                    stack.push_back(prev_value);
                 }
                 else {
-                    // if stack size is 1, it means there is no opening bracket left
-                    while(stack.size() > 0) stack.pop_back();
+                    while (stack.size() > 0) {
+                        stack.pop_back();
+                    }
                     stack.push_back(0);
                 }
             }
         }
-        return result;
+        return ans;
     }
 };
 //time: O(n) and space: O(n)
