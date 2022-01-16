@@ -2,6 +2,7 @@
 // checking validity will take O(n). so overall time complexity will be O(n^3)
 // We can try to use stack data structure
 //time: O(n) and space: O(n)
+//using stack
 class Solution {
 public:
     int longestValidParentheses(string s) {
@@ -9,20 +10,24 @@ public:
         stack.push_back(0);
         int result = 0;
         for (int i = 0; i < s.size(); i++){
+            //if we see '(', push it to stack as 0
             if (s[i] == '('){
                 stack.push_back(0);
             }
             else {
                 if (stack.size() > 1){
+                    // we got a matching pair
                     int num = stack.back();
                     stack.pop_back();
                     int val = stack.back();
                     stack.pop_back();
+                    //adding current pair value to previously found matching pair
                     val += num + 2;
                     stack.push_back(val);
                     result = max(val, result);
                 }
                 else {
+                    // if stack size is 1, it means there is no opening bracket left
                     while(stack.size() > 0) stack.pop_back();
                     stack.push_back(0);
                 }
